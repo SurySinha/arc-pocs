@@ -6,6 +6,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.application.FacesMessage;
 
+import org.springframework.web.jsf.FacesContextUtils;
+
 import com.arcmind.contact.model.Group;
 import com.arcmind.contact.model.GroupRepository;
 
@@ -14,9 +16,8 @@ public class GroupConverter implements Converter {
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
 	    System.out.println("GroupConverter.getAsObject");
-		GroupRepository repo = (GroupRepository) facesContext
-				.getExternalContext().getApplicationMap()
-				.get("groupRepository");
+		GroupRepository repo = (GroupRepository) FacesContextUtils.getWebApplicationContext(facesContext).getBean("groupRepository");
+	
 		Long id = Long.valueOf(value);
 		if (id == -1L) {
 			throw new ConverterException(new FacesMessage(
