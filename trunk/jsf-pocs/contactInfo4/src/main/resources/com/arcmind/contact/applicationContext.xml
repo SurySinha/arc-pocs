@@ -6,5 +6,14 @@
      http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
      
      <bean id="contactRepository" class="com.arcmind.contact.model.ContactRepository"/>
+     <bean id="groupRepository" class="com.arcmind.contact.model.GroupRepository"/>
+     <bean id="tagRepository" class="com.arcmind.contact.model.TagRepository"/>     
      
+     <bean id="contactController" class="com.arcmind.contact.controller.ContactController" scope="session">
+     	<property name="tagRepository" ref="tagRepository"/>
+     	<property name="groupRepository" ref="groupRepository"/>
+     	<property name="contactRepository" ref="contactRepository"/>
+     </bean>
+     
+     <bean id="contactValidators" class="com.arcmind.contact.validators.ContactValidators"/>
 </beans>

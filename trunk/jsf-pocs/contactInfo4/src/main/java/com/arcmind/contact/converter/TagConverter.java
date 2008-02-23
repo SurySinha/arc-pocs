@@ -3,6 +3,9 @@ package com.arcmind.contact.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+
+import org.springframework.web.jsf.FacesContextUtils;
+
 import com.arcmind.contact.model.Tag;
 import com.arcmind.contact.model.TagRepository;
 
@@ -11,9 +14,7 @@ public class TagConverter implements Converter {
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
         System.out.println("TagConverter.getAsObject");	    
-		TagRepository repo = (TagRepository) facesContext
-				.getExternalContext().getApplicationMap()
-				.get("tagRepository");
+		TagRepository repo = (TagRepository) FacesContextUtils.getWebApplicationContext(facesContext).getBean("tagRepository");
 		return repo.lookup(Long.valueOf(value));
 	}
 
