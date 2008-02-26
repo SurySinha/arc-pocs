@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean name="calcController"
+          class="com.arcmind.controller.CalculatorController">
+    </bean>
+
+    <bean name="addController"
+          class="com.arcmind.controller.AddController">
+
+        <property name="formView">
+        <value>calculator</value>
+        </property>
+        
+        <property name="successView">
+        <value>calculator</value>
+        </property>
+
+        <property name="validator">
+            <bean class="com.arcmind.view.validation.CalculatorFormValidator"/>
+        </property>
+
+   </bean>
+
+    <bean name="multiplyController"
+          class="com.arcmind.controller.MultiplyController">
+
+        <property name="formView">
+        <value>calculator</value>
+        </property>
+
+        <property name="successView">
+        <value>calculator</value>
+        </property>
+
+        <property name="validator">
+            <bean class="com.arcmind.view.validation.CalculatorFormValidator"/>
+        </property>
+        
+    </bean>
+
+    <bean name="divideController"
+          class="com.arcmind.controller.DivideController">
+
+     <property name="formView">
+        <value>calculator</value>
+        </property>
+
+        <property name="successView">
+        <value>calculator</value>
+        </property>
+
+        <property name="validator">
+            <bean class="com.arcmind.view.validation.CalculatorFormDivideValidator"/>
+        </property>
+
+    </bean>
+
+    <bean name="clearController"
+          class="com.arcmind.controller.ClearController">
+    </bean>
+
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <property name="prefix">
+            <value>/pages/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+
+    </bean>
+
+
+    <bean id="simpleUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/calculator.htm">calcController</prop>
+                <prop key="/add.htm">addController</prop>
+                <prop key="/multiply.htm">multiplyController</prop>
+                <prop key="/divide.htm">divideController</prop>
+                <prop key="/clear.htm">clearController</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

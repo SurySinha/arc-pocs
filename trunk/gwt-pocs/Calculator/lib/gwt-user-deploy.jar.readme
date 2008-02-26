@@ -1,0 +1,1 @@
+gwt-user-deploy.jar - it is originally library gwt-user.jar but without javax.servlet.* package (to avoid Tomcat conflict)

@@ -1,0 +1,42 @@
+.oddRow {
+	background-color: silver;
+}
+
+.evenRow {
+	background-color: white;
+}
+
+.centered {
+	text-align: center;
+	width: 30%;
+}
+
+.normal {
+	text-align: left;
+}
+
+.contactTable {
+	border: solid #000 1px;
+	width: 500px;
+}
+
+.headerTable {
+	border: solid #000 1px;
+}
+
+.errorClass {
+	color: red;
+		
+}
+
+.infoClass {
+	color: blue;
+}
+
+.labelClass {
+	color: black;
+}
+
+.formGrid {
+    border: solid #000 3px;
+}

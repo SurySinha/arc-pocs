@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Calculator" default="compile" basedir=".">
+  <property name="build.dir" value="build"/>
+  <property name="project.name" value="Calculator-GWT"/>
+  <property name="web.dir" value="www" />
+  <property environment="env"/>
+
+  <path id="jetty.plugin.classpath">
+    <fileset dir="jetty-lib" includes="*.jar"/>
+  </path>
+  <taskdef classpathref="jetty.plugin.classpath" resource="tasks.properties" loaderref="jetty.loader" />
+
+  <description>
+    Calculator build file.  This is used to package up your project as a jar,
+    if you want to distribute it.  This isn't needed for normal operation.
+  </description>
+
+  <!-- set classpath -->
+  <path id="project.class.path">
+    <pathelement path="${java.class.path}/"/>
+    <pathelement path="H:/Work/Others/Arcmind/GWT/gwt-windows-1.4.61/gwt-user.jar"/>
+    <!-- Additional dependencies (such as junit) go here -->
+  </path>
+
+  <target name="init" description="Create the output folders">
+      <delete dir="${build.dir}"/>
+      <mkdir dir="${build.dir}"/>
+  </target>
+
+
+  <target name="compile" description="Compile src to bin">
+    <mkdir dir="bin"/>
+    <javac srcdir="src:test" destdir="bin" includes="**" debug="on" debuglevel="lines,vars,source" source="1.4">
+      <classpath refid="project.class.path"/>
+    </javac>
+  </target>
+
+  <target name="package" depends="compile" description="Package up the project as a jar">
+    <jar destfile="Calculator.jar">
+      <fileset dir="bin">
+        <include name="**/*.class"/>
+      </fileset>
+      <!-- Get everything; source, modules, html files -->
+      <fileset dir="src">
+        <include name="**"/>
+      </fileset>
+      <fileset dir="test">
+        <include name="**"/>
+      </fileset>
+    </jar>
+  </target>
+
+  <target name="make-war" depends="init,compile">
+      <war destfile="${build.dir}/${project.name}.war"
+           compress="false"
+           webxml="WEB-INF/web.xml">
+          <fileset dir="${web.dir}">
+              <include name="**/*"/>
+		  </fileset>
+          <fileset dir="WEB-INF">
+              <include name="index.html"/>
+		  </fileset>
+          <lib dir="lib" includes="gwt-user-deploy.jar"/>
+          <classes dir="bin"/>
+      </war>
+  </target>
+
+  <target name="unwar" depends="make-war">
+      <delete dir="${project.name}unwar"/>
+      <unzip src="${build.dir}/${project.name}.war" dest="${project.name}unwar"/>
+  </target>
+
+  <target name="deploy" depends="unwar">
+      <delete dir="${env.CATALINA_HOME}/webapps/${project.name}"/>
+      <copy todir="${env.CATALINA_HOME}/webapps" file="${build.dir}/${project.name}.war" overwrite="true"/>
+  </target>
+
+  <target name="jetty.run">
+    <jetty tempDirectory="jetty-temp">
+      <webApp name="${project.name}" warfile="${build.dir}/${project.name}.war" contextpath="/${project.name}" />
+    </jetty>
+  </target>
+
+  <target name="clean">
+    <!-- Delete the bin directory tree -->
+    <delete file="Calculator.jar"/>
+    <delete>
+      <fileset dir="bin" includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="all" depends="package"/>
+
+</project>

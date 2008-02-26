@@ -1,0 +1,39 @@
+<webapp-structure>
+  <registeredFiles>
+    <entry>
+      <string>currentBuild</string>
+      <path-set>
+        <pathsSet class="linked-hash-set">
+          <string>css/main.css</string>
+          <string>index.jsp</string>
+          <string>META-INF/MANIFEST.MF</string>
+          <string>pages/calculator.jsp</string>
+          <string>WEB-INF/calculator-servlet.xml</string>
+          <string>WEB-INF/classes/messages.properties</string>
+          <string>WEB-INF/web.xml</string>
+          <string>WEB-INF/classes/com/arcmind/App.class</string>
+          <string>WEB-INF/classes/com/arcmind/controller/AddController.class</string>
+          <string>WEB-INF/classes/com/arcmind/controller/CalculatorController.class</string>
+          <string>WEB-INF/classes/com/arcmind/controller/ClearController.class</string>
+          <string>WEB-INF/classes/com/arcmind/controller/DivideController.class</string>
+          <string>WEB-INF/classes/com/arcmind/controller/MultiplyController.class</string>
+          <string>WEB-INF/classes/com/arcmind/model/Calculator.class</string>
+          <string>WEB-INF/classes/com/arcmind/view/CalculatorForm.class</string>
+          <string>WEB-INF/classes/com/arcmind/view/validation/CalculatorFormDivideValidator.class</string>
+          <string>WEB-INF/classes/com/arcmind/view/validation/CalculatorFormValidator.class</string>
+          <string>WEB-INF/lib/servlet-api-2.4.jar</string>
+          <string>WEB-INF/lib/jstl-1.1.2.jar</string>
+          <string>WEB-INF/lib/standard-1.1.2.jar</string>
+          <string>WEB-INF/lib/spring-beans-2.5.jar</string>
+          <string>WEB-INF/lib/commons-logging-1.1.jar</string>
+          <string>WEB-INF/lib/spring-core-2.5.jar</string>
+          <string>WEB-INF/lib/spring-webmvc-2.5.jar</string>
+          <string>WEB-INF/lib/spring-context-2.5.jar</string>
+          <string>WEB-INF/lib/aopalliance-1.0.jar</string>
+          <string>WEB-INF/lib/spring-context-support-2.5.jar</string>
+          <string>WEB-INF/lib/spring-web-2.5.jar</string>
+        </pathsSet>
+      </path-set>
+    </entry>
+  </registeredFiles>
+</webapp-structure>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean name="hideAddNewController"
+          class="com.arcmind.contact.controller.HideAddNewController">
+    </bean>
+
+    <bean name="addNewController"
+          class="com.arcmind.contact.controller.AddNewController">
+
+        <property name="formView">
+        <value>contacts</value>
+        </property>
+        
+        <property name="successView">
+        <value>contacts</value>
+        </property>
+
+        <property name="validator">
+            <bean class="com.arcmind.contact.view.validation.ContactFormValidator"/>
+        </property>
+
+   </bean>
+
+    <bean name="removeController"
+          class="com.arcmind.contact.controller.RemoveController">
+    </bean>
+
+    <bean name="editController"
+          class="com.arcmind.contact.controller.EditController">
+    </bean>
+
+    <bean name="updateController"
+          class="com.arcmind.contact.controller.UpdateController">
+
+        <property name="formView">
+        <value>contacts</value>
+        </property>
+
+        <property name="successView">
+        <value>contacts</value>
+        </property>
+
+        <property name="validator">
+            <bean class="com.arcmind.contact.view.validation.ContactFormValidator"/>
+        </property>
+
+   </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <property name="prefix">
+            <value>/pages/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+
+    </bean>
+
+
+    <bean id="simpleUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/hideAddNew.htm">hideAddNewController</prop>
+                <prop key="/addNew.htm">addNewController</prop>
+                <prop key="/remove.htm">removeController</prop>
+                <prop key="/edit.htm">editController</prop>
+                <prop key="/update.htm">updateController</prop>
+
+            </props>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+                               "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="contactForm"
+			type="com.arcmind.contact.form.ContactForm" />
+    </form-beans>
+
+
+
+    <global-exceptions />
+	<global-forwards>
+		<forward name="start" path="/pages/contacts.jsp" />
+	</global-forwards>
+	<action-mappings>
+		<action name="contactForm" 
+			input="/pages/contacts.jsp"
+			path="/addNew"
+			type="com.arcmind.contact.actions.AddNewAction" scope="session" validate="true">
+			<forward name="success" path="/pages/contacts.jsp" redirect="false"/>
+		</action>
+	    <action name="contactForm"
+			input="/pages/contacts.jsp"
+			path="/hideAddNew"
+			type="com.arcmind.contact.actions.HideAddNewAction" scope="request" validate="false">
+			<forward name="success" path="/pages/contacts.jsp" redirect="false"/>
+		</action>
+        <action name="contactForm"
+			input="/pages/contacts.jsp"
+			path="/remove"
+			type="com.arcmind.contact.actions.RemoveAction" scope="request" validate="false">
+			<forward name="success" path="/pages/contacts.jsp" redirect="false"/>
+		</action>
+        <action name="contactForm"
+			input="/pages/contacts.jsp"
+			path="/edit"
+			type="com.arcmind.contact.actions.EditAction" scope="request" validate="false">
+			<forward name="success" path="/pages/contacts.jsp" redirect="false"/>
+		</action>
+        <action name="contactForm"
+			input="/pages/contacts.jsp"
+			path="/update"
+			type="com.arcmind.contact.actions.UpdateAction" scope="request" validate="true">
+			<forward name="success" path="/pages/contacts.jsp" redirect="false"/>
+		</action>
+    </action-mappings>
+
+	<message-resources parameter="messages" />
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+  	</plug-in> 
+
+</struts-config>
+
