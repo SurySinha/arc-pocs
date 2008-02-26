@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+    <formset>
+
+        <form name="calcForm">
+            <field property="firstNumber" depends="required,integer">
+              <arg key="firstNumber"/>
+            </field>
+        
+            <field property="secondNumber" depends="required,integer">
+              <arg key="secondNumber"/>
+            </field>
+        </form>
+        
+    </formset>
+</form-validation>

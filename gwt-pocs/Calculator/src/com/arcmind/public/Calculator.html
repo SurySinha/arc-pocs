@@ -1,0 +1,148 @@
+<html>
+	<head>
+	
+		<!--                                           -->
+		<!-- Any title is fine                         -->
+		<!--                                           -->
+		<title>Calculator</title>
+
+		<!--                                           -->
+		<!-- Use normal html, such as style            -->
+		<!--                                           -->
+		<style>
+			body,td,a,div,.p{font-family:arial,sans-serif}
+			div,td{color:#000000}
+			a:link,.w,.w a:link{color:#0000cc}
+			a:visited{color:#551a8b}
+			a:active{color:#ff0000}
+
+            .gwt-TabBar {
+              padding-top: 2px;
+              border-bottom: 4px solid #87B3FF;
+              background-color: #fff;
+            }
+
+            .gwt-TabBar .gwt-TabBarFirst {
+            }
+
+            .gwt-TabBar .gwt-TabBarRest {
+            }
+
+            .gwt-TabBar .gwt-TabBarItem {
+              padding: 4px;
+              cursor: pointer;
+              cursor: hand;
+
+              background-color: #e8eef7;
+              border-bottom: 2px solid white;
+              margin-right: 2px;
+            }
+
+            .gwt-TabBar .gwt-TabBarItem-selected {
+              padding: 4px;
+              font-weight: bold;
+              cursor: default;
+
+              background-color: #87b3ff;
+              border-bottom: 2px solid #87b3ff;
+              margin-right: 2px;
+            }
+            
+            .gwt-DialogBox {
+              border: 2px outset;
+              background-color: white;
+            }
+
+            .gwt-DialogBox .Caption {
+              background-color: #C3D9FF;
+              padding: 3px;
+              margin: 2px;
+              font-weight: bold;
+              cursor: default;
+            }
+
+            .ks-layouts-Label {
+              background-color: #C3D9FF;
+              font-weight: bold;
+              margin-top: 1em;
+              padding: 2px 0px 2px 0px;
+              width: 100%;
+            }
+
+            .error {
+              background-color: #FFC3D9;
+              font-weight: bold;
+              margin-top: 1em;
+              padding: 2px 0px 2px 0px;
+              width: 100%;
+            }
+
+            .message {
+              background-color: #C3FFD9;
+              font-weight: bold;
+              margin-top: 1em;
+              padding: 2px 0px 2px 0px;
+              width: 100%;
+            }
+
+            .gwt-TextBox {
+                margin-top:5px;
+            }
+
+            .gwt-Button-mycalc {
+              background:#f5f5f5;
+              border:1px solid #aaa;
+              border-top:1px solid #ddd;
+              border-left:1px solid #ddd;
+              padding: 2px;
+              width: 8em;
+              margin-top:30px;
+            }
+
+            .ks-popups-Popup {
+                padding: 4px;
+                background-color: #FFC3D9;
+                font-weight: bold;
+            }
+
+        </style>
+
+
+        <!--                                           -->
+		<!-- This script loads your compiled module.   -->
+		<!-- If you add any GWT meta tags, they must   -->
+		<!-- be added before this line.                -->
+		<!--                                           -->
+		<script language='javascript' src='com.arcmind.Calculator.nocache.js'></script>
+	</head>
+
+	<!--                                           -->
+	<!-- The body can have arbitrary html, or      -->
+	<!-- you can leave the body empty if you want  -->
+	<!-- to create a completely dynamic ui         -->
+	<!--                                           -->
+	<body>
+
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe src="javascript:''" id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+
+		<h1>Calculator</h1>
+
+		<table align=center>
+			<tr>
+                <td>
+                    <form action="" id="calForm">
+                        <table>
+                            <tr>
+                                <td id="msgPlaceholder"></td>
+                            </tr>
+                            <tr>
+                                <td id="calculatorPlaceholder"></td>
+                            </tr>
+                         </table>
+                    </form>
+                </td>
+            </tr>
+		</table>
+	</body>
+</html>

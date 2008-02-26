@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration
+2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+    <constant name="struts.action.extension" value="htm" />
+    <constant name="struts.ui.theme" value="simple"/>
+
+    <package name="calculator" extends="struts-default" namespace="/">
+
+        <action name="*" method="{1}"
+        class="com.arcmind.actions.{0}Action">
+            <result>/pages/calculator.jsp</result>
+            <result name="error">/pages/calculator.jsp</result>
+            <result name="input">/pages/calculator.jsp</result>
+        </action>
+
+    </package>
+</struts>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+                               "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<form-beans>
+		<form-bean name="calcForm"
+			type="com.arcmind.form.CalculatorForm" />
+	</form-beans>
+
+	<global-exceptions />
+	<global-forwards>
+		<forward name="start" path="/pages/calculator.jsp" />
+	</global-forwards>
+	<action-mappings>
+
+        <action name="calcForm"
+                path="/multiaction"
+                type="com.arcmind.action.MultiAction"
+                scope="request"
+                input="/pages/calculator.jsp"
+                parameter="methodName">
+            <forward name="success" path="/pages/calculator.jsp" redirect="false"/>
+        </action>
+
+        <!--action name="calcForm"
+            input="/pages/calculator.jsp"
+            path="/add"
+            type="com.arcmind.controller.CalculatorAddAction" scope="session" validate="true">
+            <forward name="success" path="/pages/calculator.jsp" redirect="false"/>
+        </action>
+        <action name="calcForm"
+            input="/pages/calculator.jsp"
+            path="/multiply"
+            type="com.arcmind.controller.CalculatorMultiplyAction" validate="true" >
+            <forward name="success" path="/pages/calculator.jsp" redirect="false"/>
+        </action>
+        <action name="calcForm"
+            input="/pages/calculator.jsp"
+            path="/divide"
+            type="com.arcmind.controller.CalculatorDivideAction" validate="true">
+            <forward name="success" path="/pages/calculator.jsp" redirect="false"/>
+        </action>
+        <action name="calcForm"
+            input="/pages/calculator.jsp"
+            path="/clear"
+            type="com.arcmind.controller.CalculatorClearAction">
+            <forward name="success" path="/pages/calculator.jsp" />
+        </action-->
+	</action-mappings>
+
+	<message-resources parameter="messages" />
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    	<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+  	</plug-in> 
+
+</struts-config>
+

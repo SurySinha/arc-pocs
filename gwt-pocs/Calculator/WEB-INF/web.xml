@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+    <display-name>Calculator sample written with Google Web Toolkit</display-name>
+
+    <servlet>
+		<servlet-name>calculate</servlet-name>
+		<servlet-class>com.arcmind.server.service.impl.CalculatorServiceImpl</servlet-class>
+	</servlet>
+	
+ 	<servlet-mapping>
+		<servlet-name>calculate</servlet-name>
+		<url-pattern>/com.arcmind.Calculator/calculate</url-pattern>
+	</servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>
