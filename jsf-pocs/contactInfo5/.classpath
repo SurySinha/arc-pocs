@@ -1,0 +1,12 @@
+<classpath>
+  <classpathentry kind="src" path="src/main/java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/javax/faces/jsf-api/1.2_04-p02/jsf-api-1.2_04-p02.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/faces/jsf-impl/1.2_04-p02/jsf-impl-1.2_04-p02.jar"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar" sourcepath="M2_REPO/junit/junit/3.8.1/junit-3.8.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring/2.5.1/spring-2.5.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-javaconfig/1.0-M3/spring-javaconfig-1.0-M3.jar"/>
+</classpath>
