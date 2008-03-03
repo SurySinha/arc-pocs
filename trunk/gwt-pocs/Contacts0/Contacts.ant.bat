@@ -1,0 +1,1 @@
+ant -buildfile Contacts.ant.xml

@@ -1,0 +1,131 @@
+<html>
+	<head>
+	
+		<!--                                           -->
+		<!-- Any title is fine                         -->
+		<!--                                           -->
+		<title>Contacts webapp</title>
+
+		<!--                                           -->
+		<!-- Use normal html, such as style            -->
+		<!--                                           -->
+		<style>
+			body,td,a,div,.p{font-family:arial,sans-serif}
+			div,td{color:#000000}
+			a:link,.w,.w a:link{color:#0000cc}
+			a:visited{color:#551a8b}
+			a:active{color:#ff0000}
+
+            .error {
+              background-color: #FFC3D9;
+              font-weight: bold;
+              margin-top: 1em;
+              padding: 2px 0px 2px 0px;
+              width: 100%;
+            }
+
+            .message {
+              background-color: #C3FFD9;
+              font-weight: bold;
+              margin-top: 1em;
+              padding: 2px 0px 2px 0px;
+              width: 100%;
+            }
+
+            .gwt-Hyperlink {
+                color:blue;
+                text-decoration:underline;
+                cursor:pointer;
+            }
+
+            .ks-layouts-Label {
+              background-color: #C3D9FF;
+              font-weight: bold;
+              margin-top: 10px;
+              padding: 2px 0px 2px 0px;
+              width: 180px;
+              padding-left:2px;
+            }
+
+            .gwt-TextBox {
+                margin-top:10px;
+                margin-left:10px;
+                padding:1px;
+                font-size:small;
+                border:1px solid #C3D9FF;
+                height:19px;
+            }
+
+            .gwt-Button {
+              background:#ffffff;
+              border:1px solid #C3D9FF;
+              padding: 2px;
+              width: 8em;
+              margin-top:30px;
+              color:#6FA5FF;
+            }
+
+            .grid {
+                margin-top: 20px;
+                border:1px solid #C3D9FF;
+                border-spacing:2px;
+                border-collapse:collapse;
+            }
+
+            .odd {
+                background-color: #C3D9FF;
+            }
+
+            .even {
+                background-color: #fff;
+            }
+
+            .grid tr:hover{
+                font-weight:bold;
+            }
+
+            .grid td {
+                border-width: 1px;
+                border-style: groove;
+                border-color:#fff;
+                padding:2px;
+            }
+
+            .grid td a {
+                margin-left:5px;
+            }
+
+
+
+
+        </style>
+
+
+
+        <!--                                           -->
+		<!-- This script loads your compiled module.   -->
+		<!-- If you add any GWT meta tags, they must   -->
+		<!-- be added before this line.                -->
+		<!--                                           -->
+		<script language='javascript' src='com.arcmind.Contacts.nocache.js'></script>
+	</head>
+
+	<!--                                           -->
+	<!-- The body can have arbitrary html, or      -->
+	<!-- you can leave the body empty if you want  -->
+	<!-- to create a completely dynamic ui         -->
+	<!--                                           -->
+	<body>
+
+		<!-- OPTIONAL: include this if you want history support -->
+		<iframe src="javascript:''" id="__gwt_historyFrame" style="width:0;height:0;border:0"></iframe>
+
+		<h1>Contacts</h1>
+
+        <div id="msgPlaceholder"></div>
+        <div id="addNewLink"></div>
+        <div id="formPlaceholder"></div>
+        <div id="gridPlaceholder"></div>
+
+	</body>
+</html>
