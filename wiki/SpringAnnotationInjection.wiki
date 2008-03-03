@@ -32,7 +32,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 
-@SuppressWarnings("serial")
 @Controller
 @Scope("session")
 public class ContactController extends AbstractCrudController{
@@ -52,3 +51,18 @@ public class ContactRepository {
 }}}
 
 The other repos are setup the same way.
+
+Then you can inject the repos into the controller as follows:
+
+{{{
+public class ContactController extends AbstractCrudController{
+        /** Contact Controller collaborates with contactRepository. */
+        @Autowired(required=true) @Qualifier("contactRepository")
+        private ContactRepository contactRepository;
+        
+        @Autowired(required=true) @Qualifier("groupRepository")
+        private GroupRepository groupRepository;
+        
+        @Autowired(required=true) @Qualifier("tagRepository")   
+        private TagRepository tagRepository;
+}}}
