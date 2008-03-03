@@ -12,7 +12,7 @@
 
 <body>
 <f:view>
-	<h3>Contacts (5th version)</h3>
+	<h3>Contacts (7th version)</h3>
 	<f:phaseListener binding="#{contactController.phaseListener}" />
 
 	<h:messages infoClass="infoClass" errorClass="errorClass"

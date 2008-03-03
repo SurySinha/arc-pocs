@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class TagRepository{
 	private Map<Long, Tag> tags = new LinkedHashMap<Long, Tag>(); 
 	private static long counter = 1l;

@@ -15,7 +15,6 @@ public class GroupConverter implements Converter {
 
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
-	    System.out.println("GroupConverter.getAsObject");
 		GroupRepository repo = (GroupRepository) FacesContextUtils.getWebApplicationContext(facesContext).getBean("groupRepository");
 	
 		Long id = Long.valueOf(value);
@@ -28,7 +27,6 @@ public class GroupConverter implements Converter {
 
 	public String getAsString(FacesContext facesContext, UIComponent component,
 			Object value) {
-	    System.out.println("GroupConverter.getAsString");	    
 		return value == null ? "-1" : "" + ((Group) value).getId();
 	}
 

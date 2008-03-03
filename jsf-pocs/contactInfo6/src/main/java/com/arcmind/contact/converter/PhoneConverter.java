@@ -26,7 +26,6 @@ public class PhoneConverter implements Converter {
 
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        System.out.println("PhoneConverter.getAsObject()");
 
         if (value.trim().length() == 0) {
             return null;
@@ -67,7 +66,6 @@ public class PhoneConverter implements Converter {
 
     public String getAsString(FacesContext context, UIComponent component,
             Object value) {
-        System.out.println("PhoneConverter.getAsString()");
         return value.toString();
     }
 }

@@ -9,6 +9,11 @@ import javax.faces.component.UIForm;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
 import com.arcmind.contact.model.Contact;
 import com.arcmind.contact.model.ContactRepository;
 import com.arcmind.contact.model.Group;
@@ -17,10 +22,25 @@ import com.arcmind.contact.model.Tag;
 import com.arcmind.contact.model.TagRepository;
 
 @SuppressWarnings("serial")
+@Controller
+@Scope("session")
 public class ContactController extends AbstractCrudController{
+	
+	
 	/** Contact Controller collaborates with contactRepository. */
+	@Autowired(required=true) @Qualifier("contactRepository")
 	private ContactRepository contactRepository;
 	
+	@Autowired(required=true) @Qualifier("groupRepository")
+	private GroupRepository groupRepository;
+	
+	@Autowired(required=true) @Qualifier("tagRepository")	
+	private TagRepository tagRepository;
+	
+	{
+		System.out.println("###### ContactController init()");
+	}
+
 	/** The current contact that is being edited. */
 	private Contact contact = new Contact();
 	
@@ -36,9 +56,6 @@ public class ContactController extends AbstractCrudController{
 	/** Persist command. */
 	private UICommand persistCommand;
 
-	private GroupRepository groupRepository;
-	
-	private TagRepository tagRepository;
 	
 	
 	/** For injection of collaborator. */
@@ -56,10 +73,11 @@ public class ContactController extends AbstractCrudController{
 
 	public void addNew() {
 	    System.out.println("ContactController.addNew()");
+	    contact = new Contact();
 		form.setRendered(true);
 		addNewCommand.setRendered(false);
 		persistCommand.setValue("Add");
-		super.setEdit(true);
+		super.setEdit(false);
 	}
 	public String persist() {
         System.out.println("ContactController.persist()");	    
@@ -96,7 +114,7 @@ public class ContactController extends AbstractCrudController{
 				
 		addStatusMessage("Read " + contact);
 		persistCommand.setValue("Update");
-		super.setEdit(true);
+		super.setEdit(false);
 	}
 	private void addStatusMessage(String message) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
@@ -104,12 +122,10 @@ public class ContactController extends AbstractCrudController{
 	}
 	
 	public List<Contact> getContacts() {
-        System.out.println("ContactController.getContacts()");
 		return contactRepository.list();
 	}
 
 	public List<SelectItem> getAvailableGroups() {
-        System.out.println("ContactController.getAvailableGroups()");
 		List<Group> groups = groupRepository.list();
 		List<SelectItem> list = new ArrayList<SelectItem>(groups.size()+1);
 		list.add(new SelectItem(Long.valueOf(-1L), "select one"));
@@ -121,7 +137,6 @@ public class ContactController extends AbstractCrudController{
 	}
 	
 	public List<SelectItem> getAvailableTags() {
-        System.out.println("ContactController.getAvailableTags()");
 	    List<Tag> tags = tagRepository.list();
 		List<SelectItem> list = new ArrayList<SelectItem>(tags.size());
 		for (Tag tag : tags) {

@@ -13,15 +13,13 @@ public class TagConverter implements Converter {
 
 	public Object getAsObject(FacesContext facesContext, UIComponent component,
 			String value) {
-        System.out.println("TagConverter.getAsObject");	    
-		TagRepository repo = (TagRepository) FacesContextUtils.getWebApplicationContext(facesContext).getBean("tagRepository");
+        		TagRepository repo = (TagRepository) FacesContextUtils.getWebApplicationContext(facesContext).getBean("tagRepository");
 		return repo.lookup(Long.valueOf(value));
 	}
 
 	public String getAsString(FacesContext facesContext, UIComponent component,
 			Object value) {
-        System.out.println("TagConverter.getAsString");     	    
-		return value == null ? "-1" : "" + ((Tag) value).getId();
+     		return value == null ? "-1" : "" + ((Tag) value).getId();
 	}
 
 }

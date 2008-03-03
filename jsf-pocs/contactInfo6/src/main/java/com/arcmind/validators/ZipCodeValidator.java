@@ -33,7 +33,6 @@ public class ZipCodeValidator implements Validator {
 
     public void validate(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
-        System.out.println("ZipCodeValidator.validate()");
 
         /* Get the string value of the current field */
         String zipField = (String) value;
