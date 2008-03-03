@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class GroupRepository{
 	private Map<Long, Group> groups = new LinkedHashMap<Long, Group>(); 
 	private static long counter = 1l;

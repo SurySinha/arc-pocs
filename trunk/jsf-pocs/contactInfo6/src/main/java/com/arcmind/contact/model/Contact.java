@@ -50,12 +50,10 @@ public class Contact implements Serializable, Validateable {
 	}
 
 	public String getFirstName() {
-	    System.out.println("Contact.getFirstName()");
 		return firstName;
 	}
 
 	public void setFirstName(String firstName) {
-        System.out.println("Contact.setFirstName()");
 	    this.firstName = firstName;
 	}
 

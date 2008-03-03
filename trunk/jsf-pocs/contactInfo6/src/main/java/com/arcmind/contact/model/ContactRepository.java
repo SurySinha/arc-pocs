@@ -5,7 +5,14 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class ContactRepository {
+	
+	{
+		System.out.println("CONTACT REPO INIT");
+	}
 	private Map<Long, Contact> contacts = new LinkedHashMap<Long, Contact>(); 
 	private static long counter = 1l;
 

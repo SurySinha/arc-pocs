@@ -5,15 +5,16 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.springframework.stereotype.Component;
+
 import com.arcmind.contact.model.PhoneNumber;
 
-
+@Component
 public class ContactValidators {
 
     public void validatePhone(FacesContext context, UIComponent component,
             Object value) throws ValidatorException {
 
-        System.out.println("ContactValidators.validatePhone()");
         PhoneNumber phoneNumber = (PhoneNumber)value; 
 
         if (!phoneNumber.getAreaCode().equals("520")
