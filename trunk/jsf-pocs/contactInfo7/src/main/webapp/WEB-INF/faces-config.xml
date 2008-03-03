@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+	<application>
+		<message-bundle>com.arcmind.contact.messages</message-bundle>
+   		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+ 	</application>
+	<!-- 
+  	<lifecycle>
+  		<phase-listener>com.arcmind.phase.DebugPhaseListener</phase-listener>
+  	</lifecycle>
+  	 -->	
+	<converter>
+		<converter-for-class>
+			com.arcmind.contact.model.PhoneNumber
+		</converter-for-class>
+		<converter-class>
+			com.arcmind.contact.converter.PhoneConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-for-class>
+			com.arcmind.contact.model.Group
+		</converter-for-class>
+		<converter-class>
+			com.arcmind.contact.converter.GroupConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-for-class>
+			com.arcmind.contact.model.Tag
+		</converter-for-class>
+		<converter-class>
+			com.arcmind.contact.converter.TagConverter
+		</converter-class>
+	</converter>
+	<validator>
+		<validator-id>arcmind.zipCode</validator-id>
+		<validator-class>com.arcmind.validators.ZipCodeValidator</validator-class>
+	</validator>
+</faces-config>
