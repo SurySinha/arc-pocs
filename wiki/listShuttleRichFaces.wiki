@@ -45,3 +45,5 @@ Here is the workaround to this problem (uses prototype).
         </script>
 
 }}}
+
+I continue to like the idea of JSF, but the component libraries seem to be of dubious quality or perhaps I always pick the bad ones.
