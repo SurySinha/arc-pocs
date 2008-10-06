@@ -5,7 +5,7 @@ This article discusses dependency injection in a tutorial format. It covers some
 ===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is a first pass.
 
-==Dependency injection==
+=Dependency injection=
 
 Dependency injection (DI) is the ability to inject dependencies. DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. For example a data access object (DAO) may need a database connection. Thus the DAO depends on the database connection. Instead of looking up the database connection with JNDI, you could inject it. 
 
@@ -109,7 +109,7 @@ public class SimulationAtmTransport implements ATMTransport {
 
 Notice the possible implementations of the *ATMTransport* interface. The *AutomatedTellerMachineImpl* does not know or care which *transport* it uses. Also, notice for testing and developing, instead of talking to a real bank we can use the *SimulationAtmTransport*. You do not need Spring to do DI. For example, DI can be done without Spring as follows:
 
-h4. Dependency injection without Spring
+====Dependency injection without Spring====
 {{{
 package com.arcmind.springquickstart;
 
@@ -134,7 +134,7 @@ public class AtmMain {
 
 Then to inject a different *transport*, it is a mere matter of calling a different setter method as follows:
 
-h4. Injecting a different dependency
+====Injecting a different dependency====
 {{{
 		ATMTransport transport = new SimulationAtmTransport();
 		((AutomatedTellerMachineImpl)atm).setTransport(transport);
@@ -143,7 +143,7 @@ h4. Injecting a different dependency
 
 To use Spring to inject a dependency you could do the following:
 
-h4. Using Spring to manage dependencies
+====Using Spring to manage dependencies====
 {{{
 package com.arcmind.springquickstart;
 
@@ -167,7 +167,7 @@ public class AtmMain {
 
 }}}
 
-h4. /spring/applicationContext.xml file
+====/spring/applicationContext.xml file====
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -190,14 +190,14 @@ h4. /spring/applicationContext.xml file
 
 In the application context we declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then we use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
 
-** TODO describe application context
+** TODO describe application context in more detail
 
-h1. Using constructor instead of setter
+==Using constructor instead of setter==
 Another option when using Spring is to use a the constructor arguments instead of setter methods to inject dependencies. This keeps things more pure from a object oriented design as an object has to be created with all of its collaborators (a.k.a. dependencies) it needs to fulfill its role in life.
 
 Using constructors injection is much like using setter methods as follows:
 
-h4. Application context for constructor injection
+====Application context for constructor injection====
 {{{
 	
 	<bean id="standardTransport" class="com.arcmind.springquickstart.StandardAtmTransport"/>
@@ -210,7 +210,7 @@ h4. Application context for constructor injection
 
 Notice the use of the *constructor-arg* tag. This implies we have a constructor that takes *transport* as a single argument.
 
-h4. Adding a constructor to *AutomatedTellerMachineImpl*
+====Adding a constructor to *AutomatedTellerMachineImpl*====
 {{{
 public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 	
@@ -226,7 +226,7 @@ The above should keep the object purist in your group happy. Although, it should
 
 If you have many constructor in the same class with variable number of arguments, Spring will try to pick the best fit. However you can give Spring some hints as follows:
 
-h4. Application context for constructor injection with a hint for Spring
+====Application context for constructor injection with a hint for Spring====
 {{{
 	<bean id="atm" class="com.arcmind.springquickstart.AutomatedTellerMachineImpl">
 		<constructor-arg index="0" ref="standardTransport" />
@@ -236,13 +236,13 @@ h4. Application context for constructor injection with a hint for Spring
 
 Under some circumstances you can even specify which type with the type attribute you want Spring to resolve the argument as in case there are more than one possible constructor matches. I find most times I don't have to specify index or type.
 
-h1. Spring and Annotation driven DI
+==Spring and Annotation driven DI==
 
 Seam, and Guice pioneered the use of DI using annotation instead of XML. Spring also added this support and in typical Spring fashion, it does this in a flexible non-invasive manner.
 
 Let's start off with a simple example. Let's say that you misconfigured the *AutomatedTellerMachineImpl* and forgot to inject a dependency as follows:
 
-h4. 
+====Opps forgot to inject the transport====
 {{{
 	<bean id="atmTransport" class="com.arcmind.springquickstart.SoapAtmTransport" />
 
@@ -253,7 +253,7 @@ h4.
 
 You might get an error like this:
 
-h4. Typical error from misconfiguring a bean 
+====Typical error from misconfiguring a bean ==== 
 {{{
 Exception in thread "main" java.lang.NullPointerException
 	at com.arcmind.springquickstart.AutomatedTellerMachineImpl.withdraw(AutomatedTellerMachineImpl.java:25)
@@ -262,7 +262,7 @@ Exception in thread "main" java.lang.NullPointerException
 
 In a deployed app, this error could be quite cryptic. If you used the @Required annotation, you could ask Spring to scan the beans and look for missing dependencies as follows:
 
-h4. AutomatedTellerMachineImpl using @Required on the setter method of the transport property
+====AutomatedTellerMachineImpl using @Required on the setter method of the transport property====
 {{{
 import org.springframework.beans.factory.annotation.Required;
 
@@ -283,7 +283,7 @@ Caused by: org.springframework.beans.factory.BeanInitializationException: Proper
 
 This is more clear and makes it easier to debug and develop. In order to enable this required dependency checking feature you must use *context:component-scan* or the *context:annotation-config* tags. We will talk more about *context:component-scan* later. Here is the last example use *context:annotation-config*:
 
-h4.  Application context file using annotation-config tag
+====Application context file using annotation-config tag====
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
@@ -306,11 +306,11 @@ h4.  Application context file using annotation-config tag
 </beans>
 }}}
 
-h2. Using @Autowire to define a default transport
+====Using @Autowire to define a default transport====
 
 It may be the case that we want to define a default *transport* for an *AutomatedTellerMachine*. By doing this, we are basically saying, we know the *AutomatedTellerMachine* needs a *transport* and by default it uses this one. We could do this with the *@Autowire* and *@Qualifier* annotations as follows:
 
-h4. Using @Autowire and @Qualifier annotations to do DI
+====Using @Autowire and @Qualifier annotations to do DI====
 {{{
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -324,7 +324,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 When using Spring annotations for DI, you do not need to have setter methods (or a special constructor) for DI any longer. Spring can inject directly into the private fields. You have the option of annotating the setter methods instead. The applicationContext for this example looks like this:
 
-h4. Many transports configured in applicationContext, no injection specified in XML
+====Many transports configured in applicationContext, no injection specified in XML====
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
@@ -350,7 +350,7 @@ h4. Many transports configured in applicationContext, no injection specified in 
 
 Notice that no transport for injection is specified in this file. The annotations specify which transport gets injected by default. You could override which bean gets set by using standard spring injection. In this way, you have a default (*standardTransport*) that can be overridden. Here is an example of overriding with another transport (assumes you have a setter method for transport).
 
-h4. Overriding the annotation in the application context file
+====Overriding the annotation in the application context file====
 {{{
 	
 	<bean id="soapTransport" class="com.arcmind.springquickstart.SoapAtmTransport" />
@@ -365,11 +365,11 @@ h4. Overriding the annotation in the application context file
 
 Thus the XML DI injection takes precedence over the annotation. Therefore, the annotation is the "reasonable default", but the application context file has the final word.
 
-h2. Avoiding hard-wiring beans directly to other beans with @Qualifier and <qualifier/>
+==Avoiding hard-wiring beans directly to other beans with @Qualifier and <qualifier/>==
 
 For an extra level of indirection you can add a qualifier to a bean in the configuration file and then specify which type of *transport* is needed in the *AutomatedTellerMachineImpl* as follows:
 
-h4. Using @Qualifier for an extra level of indirection
+====Using @Qualifier for an extra level of indirection====
 {{{
 public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 	
@@ -379,7 +379,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 }}}
 
-h4. 
+====Using qualifier tag in applicationContext.xml====
 {{{
 	<bean id="soapTransport" class="com.arcmind.springquickstart.SoapAtmTransport" />
 	<bean id="standardTransport" class="com.arcmind.springquickstart.StandardAtmTransport">
@@ -395,13 +395,13 @@ h4.
 
 With this extra level of indirection we are not hard-wiring beans directly to other beans and if we decide that we should use a new default transport object, we don't have to rewire every dependent bean.
 
-h2. Avoiding XML hell with component-scan tag and @Service, @Component, @Repository annotations
+==Avoiding XML hell with component-scan tag and @Service, @Component, @Repository annotations==
 
 Imagine an application with hundreds of managed objects. Imagine the size of the XML configuration file(s). You can manage objects with Spring without putting them in the applicationContext files by marking them with @Service, @Component, @Repository, and telling Spring where to find them. Spring will then scan the classpath looking for these beans and then manage their dependencies automatically.
 
 To perform this feat, you must configure a *context:component-scan* tag passing the packages you would like Spring to scan as follows:
 
-h4. 
+====Using component-scan tag in applicationContext.xml==== 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
@@ -420,7 +420,7 @@ h4.
 
 Then you mark your beans with the @Service, @Component, @Repository as follows:
 
-h4. AutomatedTellerMachine class using @Service
+====AutomatedTellerMachine class using @Service====
 {{{
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -435,7 +435,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 }}}
 
-h4. Three transports using @Component
+====Three transports using @Component====
 {{{
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -472,10 +472,10 @@ public class SimulationAtmTransport implements ATMTransport {
 Notice that there is a *@Qualifier* annotation used in the * StandardAtmTransport* to denote it as the default *transport* for this application. For new projects, it makes sense to use annotations for objects that don't change their dependencies often. Avoiding XML and using annotation is the new trend in DI; some may say best practice as well.
 
 
-h1. Configuring objects
+==Configuring objects==
 In addition to injecting dependencies, Spring allows you to configure objects with primitive and basic types. Let's say that the *SoapAtmTransport* sometimes has to work in areas where the connection is not so great, so you decide to add a *retries* property to the *SoapAtmTransport* as follows:
 
-h4. SoapAtmTransport with retries
+====SoapAtmTransport with retries====
 {{{
 public class SoapAtmTransport implements ATMTransport {
 	
@@ -501,7 +501,7 @@ public class SoapAtmTransport implements ATMTransport {
 
 Notice that we can pass the retries to the constructor or call the setter method with the number or retries as follows:
 
-h4. Injecting the number of retires with the setter method
+====Injecting the number of retires with the setter method====
 {{{
 	<bean id="soapTransport" class="com.arcmind.springquickstart.SoapAtmTransport">
 		<property name="retries" value="5"/>
@@ -509,7 +509,7 @@ h4. Injecting the number of retires with the setter method
 
 }}}
 
-h4. Injecting the number of retires with a constructor arg
+====Injecting the number of retires with a constructor arg====
 {{{
 	<bean id="soapTransport" class="com.arcmind.springquickstart.SoapAtmTransport">
 		<constructor-arg value="6"/>
@@ -519,7 +519,7 @@ h4. Injecting the number of retires with a constructor arg
 
 Since this type of configuration is so common, Spring has a shortcut to simplify property value injection as follows:
 
-h4. Using p namespace in an applicationContext.xml file
+====Using p namespace in an applicationContext.xml file====
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
@@ -545,16 +545,16 @@ Notice the use of p:retries="7" which is much less verbose than the previous exa
 
 Spring allows you to configure all primitive types (int, byte, long, etc.), as well as wrapper objects (Integer, Byte, Long, etc.), and many basic types (String, URL, Class, File, etc.).
 
-h1. Using property place holder configurer
+==Using property place holder configurer==
 
 Let's say for each installation of an Automated teller machine, the installer may need to configure the number of retries. You probably don't want the installer messing with your XML file for your application context that is too much like code and too many things could go wrong. Instead perhaps they could just edit a properties file. The properties file could have properties for each of the things that could vary for a given installation of an *AutomatedTellerMachineImpl*.
 
-h4. atm.properties Properties file
+====atm.properties Properties file====
 {{{
 transport.retries=8
 }}}
 
-h4. applicationContext.xml using property-placeholder tag
+==applicationContext.xml using property-placeholder tag==
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans 
@@ -582,7 +582,7 @@ Notice the property-placeholder loads the atm.properties file off of the classpa
 
 You could load properties file from the file system using *file:* instead of *classpath:* in the location as follows:
 
-h4. Loading the properties file from the file system with the property-placeholder
+====Loading the properties file from the file system with the property-placeholder====
 {{{
 	<context:property-placeholder location="file:./src/main/resources/atm.properties"   />
 	
@@ -594,13 +594,13 @@ h4. Loading the properties file from the file system with the property-placehold
 	</bean>
 }}}
 
-h1. Scopes and lifecycle
+==Scopes and lifecycle==
 
 Spring supports the concepts of scopes. If you are familiar with JSP and Servlets, you may recall that they have request, session and application scope. Objects put into request scope stay around for the duration of one request. Objects put into session scope stay around the entire user session (unless destroyed manually). While Object put into application scope stay around as long as the web application is running. 
 
 Spring scope support is very similar. Spring supports the following scopes: prototype, singleton, request, session and more. Plus you can configure you own scope handlers. Outside of a web application, Spring mainly support two scopes out of the box: prototype and singleton. A singleton scoped object is the default. It means that the object will stay around as long as the application context does (typically very similar to application scope in a web application). A prototype scope means that every time you ask for an object, Spring will create a new one. For example:
 
-h4. Two atm's configured with different scopes
+====Two atm's configured with different scopes====
 {{{
 	<bean id="atm" class="com.arcmind.springquickstart.AutomatedTellerMachineImpl" scope="singleton">
 		<constructor-arg index="0" ref="soapTransport" />
@@ -613,7 +613,7 @@ h4. Two atm's configured with different scopes
 
 If we looked up the *atm* twice, we would get the same object; however, every time you looked up *atmP*, you would get a different object. This can be demonstrated by the following example:
 
-h4. Example demonstrating prototype vs. singleton
+====Example demonstrating prototype vs. singleton====
 {{{
 		AutomatedTellerMachine atm1 = (AutomatedTellerMachine) appContext.getBean("atm");
 		AutomatedTellerMachine atm2 = (AutomatedTellerMachine) appContext.getBean("atm");
@@ -624,11 +624,11 @@ h4. Example demonstrating prototype vs. singleton
 		assert atmP1 != atmP2; //Second assert
 }}}
 
-h2. Life cycle methods
+==Life cycle methods==
 
 Often times it is the case that you need an object to initialize itself after all of the dependencies have been set. Spring allows you to specify an init method as follows:
 
-h4. Specifying an init method with Spring (applicationContext.xml)
+====Specifying an init method with Spring (applicationContext.xml)====
 {{{
 	<bean id="atm" class="com.arcmind.springquickstart.AutomatedTellerMachineImpl" scope="singleton" init-method="init">
 		<constructor-arg index="0" ref="soapTransport" />
@@ -643,7 +643,7 @@ Notice the use of the *init-method* attribute in the *bean* tag. The name of the
 
 Here is the init method defined in Java. (We also defined a few more methods for the transport to add to the flavor of the example and a shutdown method which we will get to in a moment).
 
-h4. Init Method and Shutdown method in Java
+====Init Method and Shutdown method in Java====
 {{{
 public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
@@ -664,7 +664,7 @@ The *atm* bean's *init* method gets called right when we first load the applicat
 
 You can also specify a clean up method using the attribute destroy-method as follows:
 
-h4. Using destroy-method attribute
+====Using destroy-method attribute====
 {{{
 	<bean id="atm" class="com.arcmind.springquickstart.AutomatedTellerMachineImpl" scope="singleton" 
 		init-method="init" destroy-method="shutdown">
@@ -680,7 +680,9 @@ h4. Using destroy-method attribute
 The destroy method would never get called by Spring on atmP because it does not manage the life cycle of prototype beans after creation. The destroy method on atm would only get called if someone gracefully closed the application context  (which Spring does for some application contexts) which is beyond the scope of this introduction tutorial.
 
 
-h1. Conclusion
-DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. You don't need Spring to use DI. You could use DI with plain old Java. However, Spring provides a very nice, powerful DI container. There are other DI containers and frameworks out there Plexus, Pico container, JBoss microcontainer, more recently Guice. And, other frameworks allow dependency injection like JSF, Seam and more. But Spring is the de factor industry standard way to do DI.
+==Conclusion==
+DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. You don't need Spring to use DI. You could use DI with plain old Java. However, Spring provides a very nice, powerful DI container. There are other DI containers and frameworks out there Plexus, Pico container, JBoss microcontainer, more recently Guice. And, other frameworks allow dependency injection like JSF, Seam and more. But Spring is the de facto industry standard way to do DI.
 
-What is also interesting is what we did not cover. We did not cover autowiring using by type, by name or constructor autowiring as these are features that developers just don't use in a production environment. A future tutorial titled, "DI details", will cover this as well as many other topics related to Spring DI like bean definitions, using lists, maps and sets, FactoryBeans, ApplicationContextAware, and yes autowiring.
+What is also interesting is what we did not cover. We did not cover autowiring using by type, by name or constructor autowiring as these are features that developers just don't use in a production environments. A future tutorial titled, "DI details", will cover this as well as many other topics related to Spring DI like bean definitions, using lists, maps and sets, FactoryBeans, ApplicationContextAware, and yes autowiring.
+
+The next item in this tutorial series will be AOP. Followed by Spring DAO and JPA support.
