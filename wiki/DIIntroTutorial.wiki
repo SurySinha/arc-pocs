@@ -1,11 +1,11 @@
 #summary DI introduction tutorial
-h3. About this article
+===About this article===
 This article discusses dependency injection in a tutorial format. It covers some of the newer features of Spring DI like annotations, improved XML config and more.
 
-h3. Article status
+===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is a first pass.
 
-h3. Dependency injection
+==Dependency injection==
 
 Dependency injection (DI) is the ability to inject dependencies. DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. For example a data access object (DAO) may need a database connection. Thus the DAO depends on the database connection. Instead of looking up the database connection with JNDI, you could inject it. 
 
@@ -17,7 +17,7 @@ Let's say you have a automated teller machine. And this automated banking machin
 
 This example could be represented by the two interfaces as follows:
 
-h4. AutomatedTellerMachine interface
+====AutomatedTellerMachine interface====
 {{{
 package com.arcmind.springquickstart;
 
@@ -30,7 +30,7 @@ public interface AutomatedTellerMachine {
 
 }}}
 
-h4. ATMTransport interface
+====ATMTransport interface====
 {{{
 package com.arcmind.springquickstart;
 
@@ -43,7 +43,7 @@ Now an *AutomatedTellerMachine* needs a transport to do it role in life, namely 
 
 An implementation of the *AutomatedTellerMachine* may look like this:
 
-h4. AutomatedTellerMachine implementation
+====AutomatedTellerMachine implementation====
 {{{
 package com.arcmind.springquickstart;
 
@@ -73,7 +73,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 The *AutomatedTellerMachineImpl* does not know or care how the *transport* does its job; just that it needs it to withdraw, and deposit money from the bank. This level of indirection allows us replace the *transport* with different implementations for example:
 
-h4. Three example transports: SoapAtmTransport, StandardAtmTransport and SimulationAtmTransport
+====Three example transports: SoapAtmTransport, StandardAtmTransport and SimulationAtmTransport====
 {{{
 package com.arcmind.springquickstart;
 
