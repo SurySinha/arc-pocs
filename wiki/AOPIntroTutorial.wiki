@@ -1,0 +1,282 @@
+#summary AOP introduction tutorial
+===About this article===
+This article discusses AOP in a tutorial format. It covers some of the newer features of Spring AOP like annotations, improved XML config and more. It builds on the DIIntroTutorial. 
+
+===Article status===
+This has not been reviewed or edited. This has not been tech reviewed. This is an *early* first pass.
+
+=Spring 2.x AOP=
+For some, AOP seems like voodoo magic. For others, AOP seems like a cure all. For now, let's just say that AOP is a tool that you want in your developer tool box. It can make seemingly impossible things easy.
+
+The first time I used AOP was with Spring's transaction management support. I did not realize I was using AOP, I just knew Spring could apply EJB-style transaction management to POJOs. It was probably 3 to six months before I realized I was using Spring's AOP support. Spring truly brought AOP out of the esoteric closet into the main stream light of day.
+
+You can think of AOP as a way to apply services (called cross-cutting concerns) to objects. AOP encompasses more than this, but this is where it gets used mostly in the main stream.
+
+I've using AOP to apply caching services, transaction management, resource management, etc. to any number of objects in an application. It is not a panacea, but it certainly fits a lot of otherwise difficult use cases.
+
+For this introduction to AOP, let's take a simple example, let's apply security services to our Automated Teller Machine from the first DI example.
+
+You can think of AOP as a dynamic decorator design pattern. (TODO Explain decorator design pattern.)
+
+Let's say when a user logs into a system a *SecurityToken* is created that carries the user's credentials and before methods on objects get invoked, we want to check to see if the user has credentials to invoke these methods.
+
+In a web application, you could write a *ServletFilter*, that stored this *SecurityToken* in HttpSession and then on every request retrieved the token from Session and put it into a *ThreadLocal* variable where it could be accessed from a *SecurityService* that you could implement.
+
+Perhaps the objects that needed the *SecurityService* could access it as follows:
+
+{{{
+	public void deposit(BigDecimal bd) {
+	    	/* If the user is not logged in, don't let them use this method */
+    		if(!securityManager.isLoggedIn()){
+    			throw new SecurityViolationException();
+    		}
+	    	/* Only proceed if the current user is allowed. */
+
+	    	if (!securityManager.isAllowed("AutomatedTellerMachine", operationName)){
+    			throw new SecurityViolationException();
+    		}
+		...
+
+		transport.communicateWithBank(...);
+	}
+}}}
+
+In our ATM, example the above might work out well, but imagine a system with thousands of classes that needed security. Now imagine, the way we check to see if a user is logged is changed. If we put this code into every method that needed security, then we could possibly have to change this a thousand times if we changed the way we checked to see if a user was logged in.
+
+For this example, we will use a simplified *SecurityToken* that get stored into a *ThreadLocal* variable, but one could imagine one that was populated with data from a database or an LDAP server or some other source. 
+
+Here is the *SecurityToken*, which gets stored into a *ThreadLocal* variable, for this example:
+
+====SecurityToken====
+{{{
+package com.arcmind.springquickstart.security;
+
+/**
+ * @author Richard Hightower
+ *
+ */
+public class SecurityToken {
+	
+	private boolean allowed;
+	private String userName;
+	
+	public SecurityToken() {
+		
+	}
+	
+	
+	
+	public SecurityToken(boolean allowed, String userName) {
+		super();
+		this.allowed = allowed;
+		this.userName = userName;
+	}
+
+
+
+	public boolean isAllowed(String object, String methodName) {
+		return allowed;
+	}
+
+	
+	/**
+	 * @return Returns the allowed.
+	 */
+	public boolean isAllowed() {
+		return allowed;
+	}
+	/**
+	 * @param allowed The allowed to set.
+	 */
+	public void setAllowed(boolean allowed) {
+		this.allowed = allowed;
+	}
+	/**
+	 * @return Returns the userName.
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	/**
+	 * @param userName The userName to set.
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+}
+
+}}}
+
+The * SecurityService* stores the *SecurityToken* into the *ThreadLocal* variable, and then delegates to it to see if the current user has access to perform the current operation on the current object.
+
+====SecurityService====
+{{{
+package com.arcmind.springquickstart.security;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+
+/**
+ * @author Richard Hightower
+ *
+ */
+@Service ("defaultSecurityService")
+@Qualifier("manager")
+public class SecurityService {
+	
+	private static ThreadLocal<SecurityToken> currentToken = new ThreadLocal<SecurityToken>();
+	
+	public static void placeSecurityToken(SecurityToken token){
+		currentToken.set(token);
+	}
+	
+	public void clearSecuirtyToken(){
+		currentToken.set(null);
+	}
+	
+	public boolean isLoggedIn(){
+		SecurityToken token = currentToken.get();
+		return token!=null;
+	}
+	
+	public boolean isAllowed(String object, String method){
+		SecurityToken token = currentToken.get();
+		return token.isAllowed();
+	}
+	
+	public String getCurrentUserName(){
+		SecurityToken token = currentToken.get();
+		if (token!=null){
+			return token.getUserName();
+		}else {
+			return "Unknown";
+		}
+	}
+
+}
+
+}}}
+
+====SecurityViolationException====
+{{{
+package com.arcmind.springquickstart.security;
+
+/**
+ * @author Richard Hightower
+ *
+ */
+public class SecurityViolationException extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+}
+
+}}}
+
+
+To remove the security code out of the AutomatedTellerMachineImpl class and any other class that needs security, we will write an Aspect to intercept calls and perform security checks before the method call.
+
+Here is the SecurityAdvice class which will intercept calls.
+
+====SecurityAdvice====
+{{{
+package com.arcmind.springquickstart.security;
+
+
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author Richard Hightower
+ */
+@Component
+public class SecurityAdvice {
+	
+	@Autowired(required=true)
+	@Qualifier ("manager")
+	private SecurityService securityManager;
+
+	public void checkSecurity(ProceedingJoinPoint joinPoint) throws Throwable {
+		
+    	/* If the user is not logged in, don't let them use this method */
+    	if(!securityManager.isLoggedIn()){
+    		throw new SecurityViolationException();
+    	}
+
+        /* Get the name of the method being invoked. */
+    	String operationName = joinPoint.getSignature().getName();
+    	/* Get the name of the object being invoked. */
+    	String objectName = joinPoint.getThis().getClass().getName();
+
+
+    	/*
+    	 * Invoke the method or next Interceptor in the list,
+    	 * if the current user is allowed.
+    	 */
+    	if (!securityManager.isAllowed(objectName, operationName)){
+    		throw new SecurityViolationException();
+    	}
+    	
+    	joinPoint.proceed();
+	}
+	
+
+	/**
+	 * @return Returns the manager.
+	 */
+	public SecurityService getSecurityManager() {
+		return securityManager;
+	}
+	/**
+	 * @param manager The manager to set.
+	 */
+	public void setSecurityManager(SecurityService manager) {
+		this.securityManager = manager;
+	}
+	
+}
+
+}}}
+
+The * checkSecurity* method of * SecurityAdvice* is the method that implements the advice. You can think of advice as the decoration that we want to apply to other objects. The objects getting the decoration are called advised objects. 
+
+Notice that the *SecurityService* gets injected into the *SecurityAdvice* and the *checkSecurity* method uses the *SecurityService* to see if the user is logged in and they have the rights to execute the method. 
+
+An instance of *ProceedingJoinPoint*, namely *joinPoint*, is passed as an argument to *checkSecurity*. The  *ProceedingJoinPoint* has information about the method that is being called and provides control that determines if the method on the advised object's methods get invoked (*AutomatedTellerMachineImpl.withdraw* and *AutomatedTellerMachineImpl.deposit*). If *joinPoint.proceed()* is not called then the wrapped method of the advised object (*withdraw* or *deposit*) is not called.
+
+To apply an Advice like *SecurityAdvice* to an advised object, you need a pointcut. A pointcut is like a filter that picks the objects and methods that get decorated. For this example, we will configure the pointcut into the Spring application context with the *aop:config*,  *aop:aspect*, *aop:pointcut*, and *aop:around* tags as follows:.
+
+====applicationContext.xmlf====
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/aop     http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		">
+
+	
+	<context:component-scan base-package="com.arcmind.springquickstart"/>
+	
+	<aop:config>
+		<aop:aspect id="securityAspect" ref="securityAdvice">
+			<aop:pointcut id="atmLayer"  expression="bean(atm)"/>
+			<aop:around  pointcut-ref="atmLayer"  method="checkSecurity"/>
+		</aop:aspect>
+	</aop:config>
+	
+</beans>
+
+}}}
+
