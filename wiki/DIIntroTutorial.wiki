@@ -388,7 +388,7 @@ You could override which bean gets set by using standard spring injection. In th
 
 Thus the XML DI injection takes precedence over the annotation. Therefore, the annotation is the "reasonable default", but the application context file has the final word.
 
-==Avoiding hard-wiring beans directly to other beans with @Qualifier and <qualifier/>==
+==Avoiding hard-wiring beans directly to other beans with @Qualifier and qualifier tag==
 
 For an extra level of indirection you can add a qualifier to a bean in the configuration file and then specify which type of *transport* is needed in the *AutomatedTellerMachineImpl* as follows:
 
