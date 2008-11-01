@@ -587,7 +587,7 @@ Since this type of configuration is so common, Spring has a shortcut to simplify
 </beans>
 }}}
 
-Notice the use of p:retries="7" which is much less verbose than the previous example which used the *property* tag to set the value. If you are using the Spring IDE plugin for Eclipse, you will get code completion for the *p:<property-name-syntax>*. 
+Notice the use of p:retries="7" which is much less verbose than the previous example which used the *property* tag to set the value. If you are using the Spring IDE plugin for Eclipse, you will get code completion for the *p:property-name-syntax*. 
 
 Figure 8 illustrates configuring retries using the shortcut notation added in Spring 2.x.
 
