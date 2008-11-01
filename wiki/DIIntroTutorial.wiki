@@ -5,7 +5,7 @@ This article discusses dependency injection in a tutorial format. It covers some
 ===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is a first pass. 
 
-Update... I took a second pass to it. Added images. Complete TODOs. Next comes me copy editing it, then hiring a copy editor.
+Update... I took a second pass to it. Added images. Completed TODOs. Next comes me copy editing it, then hiring a copy editor.
 
 =Dependency injection=
 
