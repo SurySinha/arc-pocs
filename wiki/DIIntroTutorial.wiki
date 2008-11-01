@@ -190,7 +190,7 @@ public class AtmMain {
 The diagram 1 illustrates how Spring injects the dependency using property setter method injection.
 
 ====Diagram 1====
-https://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide01.jpg
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide01.jpg
 
 In the application context we declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then we use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
 
