@@ -187,9 +187,9 @@ public class AtmMain {
 
 }}}
 
-The diagram 1 illustrates how Spring injects the dependency using property setter method injection.
+The figure 1 illustrates how Spring injects the dependency using property setter method injection.
 
-====Diagram 1====
+====Figure 1====
 http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide01.jpg
 
 In the application context we declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then we use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
@@ -233,6 +233,11 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 }}}
 
 The above should keep the object purist in your group happy. Although, it should be noted that the setter injection style makes Test driven development a bit easier. In practice, I see the setter method approach used more.
+
+Figure 2 illustrates how the constructor injection occurs.
+
+====Figure 2====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide02.jpg
 
 If you have many constructor in the same class with variable number of arguments, Spring will try to pick the best fit. However you can give Spring some hints as follows:
 
@@ -358,7 +363,15 @@ When using Spring annotations for DI, you do not need to have setter methods (or
 </beans>
 }}}
 
-Notice that no transport for injection is specified in this file. The annotations specify which transport gets injected by default. You could override which bean gets set by using standard spring injection. In this way, you have a default (*standardTransport*) that can be overridden. Here is an example of overriding with another transport (assumes you have a setter method for transport).
+Notice that no transport for injection is specified in this file. The annotations specify which transport gets injected by default. 
+
+Figure 3 illustrates injection using this technique.
+
+====Figure 3====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide03.jpg
+
+
+You could override which bean gets set by using standard spring injection. In this way, you have a default (*standardTransport*) that can be overridden. Here is an example of overriding with another transport (assumes you have a setter method for transport).
 
 ====Overriding the annotation in the application context file====
 {{{
@@ -403,7 +416,13 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 }}}
 
-With this extra level of indirection we are not hard-wiring beans directly to other beans and if we decide that we should use a new default transport object, we don't have to rewire every dependent bean.
+With this extra level of indirection, we are not hard-wiring beans directly to other beans and if we decide that we should use a new default transport object, we don't have to rewire every dependent bean.
+
+Figure 4 illustrates injection using this technique.
+
+====Figure 4====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide04.jpg
+
 
 ==Avoiding XML hell with component-scan tag and @Service, @Component, @Repository annotations==
 
@@ -481,6 +500,11 @@ public class SimulationAtmTransport implements ATMTransport {
 
 Notice that there is a *@Qualifier* annotation used in the * StandardAtmTransport* to denote it as the default *transport* for this application. For new projects, it makes sense to use annotations for objects that don't change their dependencies often. Avoiding XML and using annotation is the new trend in DI; some may say best practice as well.
 
+Figure 5 illustrates injection using this technique.
+
+====Figure 5====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide05.jpg
+
 
 ==Configuring objects==
 In addition to injecting dependencies, Spring allows you to configure objects with primitive and basic types. Let's say that the *SoapAtmTransport* sometimes has to work in areas where the connection is not so great, so you decide to add a *retries* property to the *SoapAtmTransport* as follows:
@@ -527,6 +551,18 @@ Notice that we can pass the retries to the constructor or call the setter method
 	
 }}}
 
+Figure 6 illustrates configuring retries using setter method injection.
+
+====Figure 6====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide06.jpg
+
+Figure 7 illustrates configuring retries using constructor arguments.
+
+====Figure 7====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide07.jpg
+
+
+
 Since this type of configuration is so common, Spring has a shortcut to simplify property value injection as follows:
 
 ====Using p namespace in an applicationContext.xml file====
@@ -552,6 +588,11 @@ Since this type of configuration is so common, Spring has a shortcut to simplify
 }}}
 
 Notice the use of p:retries="7" which is much less verbose than the previous example which used the *property* tag to set the value. If you are using the Spring IDE plugin for Eclipse, you will get code completion for the *p:<property-name-syntax>*. 
+
+Figure 8 illustrates configuring retries using the shortcut notation added in Spring 2.x.
+
+====Figure 8====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide08.jpg
 
 Spring allows you to configure all primitive types (int, byte, long, etc.), as well as wrapper objects (Integer, Byte, Long, etc.), and many basic types (String, URL, Class, File, etc.).
 
@@ -589,6 +630,11 @@ transport.retries=8
 }}}
 
 Notice the property-placeholder loads the atm.properties file off of the classpath. Then we use the *transport.retries* defined in the atm.properties file as follows *p:retries="${transport.retries}"*.
+
+Figure 9 illustrates using the property placeholder configurer
+
+====Figure 9====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide09.jpg
 
 You could load properties file from the file system using *file:* instead of *classpath:* in the location as follows:
 
@@ -688,6 +734,12 @@ You can also specify a clean up method using the attribute destroy-method as fol
 }}}
 
 The destroy method would never get called by Spring on atmP because it does not manage the life cycle of prototype beans after creation. The destroy method on atm would only get called if someone gracefully closed the application context  (which Spring does for some application contexts) which is beyond the scope of this introduction tutorial.
+
+
+Figure 10 illustrates using the lifecycle methods.
+
+====Figure 10====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide10.jpg
 
 
 ==Conclusion==
