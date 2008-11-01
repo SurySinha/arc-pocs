@@ -4,7 +4,7 @@ This article discusses dependency injection in a tutorial format. It covers some
 
 ===About the author===
 Rick Hightower
-([http://docs.google.com/View?docid=dw4ms58_7ghf4wbc4 Rick's bio]) serves as chief technology officer for ArcMind Inc., a training and consulting firm specializing in Spring, JPA/Hibernate, and JSF.
+([http://docs.google.com/View?docid=dw4ms58_7ghf4wbc4 Rick's bio]) serves as chief technology officer for [http://www.arc-mind.com/ ArcMind Inc., a consulting and training firm specializing in Spring, JPA/Hibernate, and JSF].
  
 
 ===Article status===
