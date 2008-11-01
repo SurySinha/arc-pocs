@@ -2,10 +2,15 @@
 ===About this article===
 This article discusses dependency injection in a tutorial format. It covers some of the newer features of Spring DI like annotations, improved XML config and more.
 
+===About the author===
+Rick Hightower
+[http://docs.google.com/View?docid=dw4ms58_7ghf4wbc4 Rick's bio]
+
 ===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is a first pass. 
 
 Update... I took a second pass to it. Added images. Completed TODOs. Next comes me copy editing it, then hiring a copy editor.
+
 
 =Dependency injection=
 
