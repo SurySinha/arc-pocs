@@ -187,10 +187,20 @@ public class AtmMain {
 
 }}}
 
+The diagram 1 illustrates how Spring injects the dependency using property setter method injection.
+
+====Diagram 1====
+https://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide01.jpg
 
 In the application context we declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then we use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
 
-** TODO describe application context in more detail
+The application context is the central interface to the Spring DI container, it provides (taken from API docs):
+    * "Bean factory methods for accessing application components" 
+    * "The ability to load file resources in a generic fashion"
+    * "The ability to resolve messages, supporting internationalization" 
+    *  and more.
+
+The focues of this article will be the bean factory methods and dependency injection. 
 
 ==Using constructor instead of setter==
 Another option when using Spring is to use a the constructor arguments instead of setter methods to inject dependencies. This keeps things more pure from a object oriented design as an object has to be created with all of its collaborators (a.k.a. dependencies) it needs to fulfill its role in life.
