@@ -17,9 +17,9 @@ Update... I took a second pass to it. Added images. Completed TODOs. Next comes 
 
 Dependency injection (DI) is the ability to inject dependencies. DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. For example a data access object (DAO) may need a database connection. Thus the DAO depends on the database connection. Instead of looking up the database connection with JNDI, you could inject it. 
 
-One way to think about a DI container like Spring is to think of JNDI turned inside out. Instead of the objects you write looking up other objects it needs to get its job done (dependencies), with DI the container injects those objects. This is the so-called Hollywood principle, you don't call us, we will call you.
+One way to think about a DI container like Spring is to think of JNDI turned inside out. Instead of the objects looking up other objects that it needs to get its job done (dependencies), with DI the container injects those dependent objects. This is the so-called Hollywood principle, you don't call us (lookup objects), we will call you (inject objects).
 
-If you have worked with CRC cards, you can then of a dependency as a collaborator, i.e., an object that another objects needs to do its job.
+If you have worked with CRC cards, you can think of a dependency as a collaborator, i.e., an object that another objects needs to do perform its role.
 
 Let's say you have a automated teller machine. And this automated banking machine needs the ability to talk to a bank, and it uses what it calls a transport object to do this. In this example, a transport object handles the low level communication to the bank.
 
@@ -47,7 +47,7 @@ public interface ATMTransport {
 }
 }}}
 
-Now an *AutomatedTellerMachine* needs a transport to do it role in life, namely withdraw money and deposit money. The * AutomatedTellerMachine* may depend on many objects to do it role in life. It collaborates with its dependencies to do its job in life.
+Now an *AutomatedTellerMachine* needs a transport to do it role in life, namely withdraw money and deposit money. The *AutomatedTellerMachine* may depend on many objects to do it role in life. It collaborates with its dependencies to do its job in life.
 
 An implementation of the *AutomatedTellerMachine* may look like this:
 
@@ -79,7 +79,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 }}}
 
-The *AutomatedTellerMachineImpl* does not know or care how the *transport* does its job; just that it needs it to withdraw, and deposit money from the bank. This level of indirection allows us replace the *transport* with different implementations for example:
+The *AutomatedTellerMachineImpl* does not know or care how the *transport* does its job; just that it needs it to withdraw, and deposit money from the bank. This level of indirection allows us to replace the *transport* with different implementations for example:
 
 ====Three example transports: SoapAtmTransport, StandardAtmTransport and SimulationAtmTransport====
 {{{
@@ -115,7 +115,9 @@ public class SimulationAtmTransport implements ATMTransport {
 
 }}}
 
-Notice the possible implementations of the *ATMTransport* interface. The *AutomatedTellerMachineImpl* does not know or care which *transport* it uses. Also, notice for testing and developing, instead of talking to a real bank we can use the *SimulationAtmTransport*. You do not need Spring to do DI. For example, DI can be done without Spring as follows:
+Notice the possible implementations of the *ATMTransport* interface. The *AutomatedTellerMachineImpl* does not know or care which *transport* it uses. Also, notice for testing and developing, instead of talking to a real bank, we can use the *SimulationAtmTransport*. 
+
+You do not need Spring to do DI. The concept of DI transcends Spring. For example, DI can be done without Spring as follows:
 
 ====Dependency injection without Spring====
 {{{
@@ -200,7 +202,7 @@ The figure 1 illustrates how Spring injects the dependency using property setter
 ====Figure 1====
 http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide01.jpg
 
-In the application context we declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then we use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
+In the application context, you declare two beans with the *bean* tag namely, *atmTransport* and *atm*. Then you use the *property* tag to inject the *atmTransport* bean into the transport property. This effectively calls the setter method of the *AutomatedTellerMachineImpl* transport property (setTransport(...)).
 
 The application context is the central interface to the Spring DI container, it provides (taken from API docs):
     * "Bean factory methods for accessing application components" 
@@ -211,7 +213,7 @@ The application context is the central interface to the Spring DI container, it 
 The focues of this article will be the bean factory methods and dependency injection. 
 
 ==Using constructor instead of setter==
-Another option when using Spring is to use a the constructor arguments instead of setter methods to inject dependencies. This keeps things more pure from a object oriented design as an object has to be created with all of its collaborators (a.k.a. dependencies) it needs to fulfill its role in life.
+Another option when using Spring is to use a the constructor arguments instead of setter methods to inject dependencies. This keeps things more pure from a object oriented design standpoint as an object has to be created with all of its collaborators (a.k.a. dependencies) it needs to fulfill its role in life.
 
 Using constructors injection is much like using setter methods as follows:
 
@@ -226,7 +228,7 @@ Using constructors injection is much like using setter methods as follows:
 
 }}}
 
-Notice the use of the *constructor-arg* tag. This implies we have a constructor that takes *transport* as a single argument.
+Notice the use of the *constructor-arg* tag. This implies that we have a constructor that takes *transport* as a single argument.
 
 ====Adding a constructor to *AutomatedTellerMachineImpl*====
 {{{
@@ -240,7 +242,7 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
 
 }}}
 
-The above should keep the object purist in your group happy. Although, it should be noted that the setter injection style makes Test driven development a bit easier. In practice, I see the setter method approach used more.
+The above should keep the object purists in your group happy. Although, it should be noted that the setter injection style makes Test driven development a bit easier. In practice, I see the setter method approach used more often.
 
 Figure 2 illustrates how the constructor injection occurs.
 
@@ -257,11 +259,11 @@ If you have many constructor in the same class with variable number of arguments
 
 }}}
 
-Under some circumstances you can even specify which type with the type attribute you want Spring to resolve the argument as in case there are more than one possible constructor matches. I find most times I don't have to specify index or type.
+Under some circumstances you can even specify which type with the type attribute you want Spring to resolve the constructor argument just in case there are more than one possible constructor matches. I find most times I don't have to specify index or type. Your mileage may vary.
 
 ==Spring and Annotation driven DI==
 
-Seam, and Guice pioneered the use of DI using annotation instead of XML. Spring also added this support and in typical Spring fashion, it does this in a flexible non-invasive manner.
+[http://www.jboss.com/products/seam Seam], and [http://code.google.com/p/google-guice/ Guice] pioneered the use of DI using annotation instead of XML. Spring also added this support and in typical Spring fashion, it does this in a flexible non-invasive manner.
 
 Let's start off with a simple example. Let's say that you misconfigured the *AutomatedTellerMachineImpl* and forgot to inject a dependency as follows:
 
@@ -304,7 +306,7 @@ Now when we ran this and forgot to configure a transport, we would get this:
 Caused by: org.springframework.beans.factory.BeanInitializationException: Property 'transport' is required for bean 'atm'
 }}}
 
-This is more clear and makes it easier to debug and develop. In order to enable this required dependency checking feature you must use *context:component-scan* or the *context:annotation-config* tags. We will talk more about *context:component-scan* later. Here is the last example use *context:annotation-config*:
+This is more clear and makes it easier to debug and develop. To enable this required dependency checking feature, you must use *context:component-scan* or the *context:annotation-config* tags. We will talk more about *context:component-scan* later. Here is the last example use *context:annotation-config*:
 
 ====Application context file using annotation-config tag====
 {{{
@@ -660,9 +662,9 @@ You could load properties file from the file system using *file:* instead of *cl
 
 ==Scopes and lifecycle==
 
-Spring supports the concepts of scopes. If you are familiar with JSP and Servlets, you may recall that they have request, session and application scope. Objects put into request scope stay around for the duration of one request. Objects put into session scope stay around the entire user session (unless destroyed manually). While Object put into application scope stay around as long as the web application is running. 
+Spring supports the concepts of scopes. If you are familiar with JSP and Servlets, you may recall that they have request, session and application scope. Objects put into request scope stay around for the duration of one request. Objects put into session scope stay around the entire user session (unless destroyed manually). While objects put into application scope stay around as long as the web application is running. 
 
-Spring scope support is very similar. Spring supports the following scopes: prototype, singleton, request, session and more. Plus you can configure you own scope handlers. Outside of a web application, Spring mainly support two scopes out of the box: prototype and singleton. A singleton scoped object is the default. It means that the object will stay around as long as the application context does (typically very similar to application scope in a web application). A prototype scope means that every time you ask for an object, Spring will create a new one. For example:
+Spring scope support is very similar. Spring supports the following scopes: prototype, singleton, request, session and more. Plus you can configure you own scope handlers. Outside of a web application, Spring mainly support two scopes out of the box: prototype and singleton. A singleton scoped object is the default. It means that the object will stay around as long as the application context does (typically very similar to application scope in a web application). A prototype scope means that every time that you ask for an object, Spring will create a new one. For example:
 
 ====Two atm's configured with different scopes====
 {{{
@@ -675,7 +677,7 @@ Spring scope support is very similar. Spring supports the following scopes: prot
 	</bean>
 }}}
 
-If we looked up the *atm* twice, we would get the same object; however, every time you looked up *atmP*, you would get a different object. This can be demonstrated by the following example:
+If we looked up the *atm* twice, we would get the same object because it is in singleton scope; however, every time you looked up *atmP*, you would get a different object because it is in prototype scope. This can be demonstrated by the following example:
 
 ====Example demonstrating prototype vs. singleton====
 {{{
@@ -741,7 +743,7 @@ You can also specify a clean up method using the attribute destroy-method as fol
 	</bean>
 }}}
 
-The destroy method would never get called by Spring on atmP because it does not manage the life cycle of prototype beans after creation. The destroy method on atm would only get called if someone gracefully closed the application context  (which Spring does for some application contexts) which is beyond the scope of this introduction tutorial.
+The destroy method would never get called by Spring on atmP because it does not manage the life cycle of prototype beans after creation. The destroy method on atm would only get called if someone gracefully closed the application context which Spring does for some application contexts (which is beyond the scope of this introduction tutorial).
 
 
 Figure 10 illustrates using the lifecycle methods.
@@ -751,7 +753,9 @@ http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/Slide10.jpg
 
 
 ==Conclusion==
-DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. You don't need Spring to use DI. You could use DI with plain old Java. However, Spring provides a very nice, powerful DI container. There are other DI containers and frameworks out there Plexus, Pico container, JBoss microcontainer, more recently Guice. And, other frameworks allow dependency injection like JSF, Seam and more. But Spring is the de facto industry standard way to do DI.
+DI can help make your code architecturally pure. It aids in using a design by interface approach as well as test driven development by providing a consistent way to inject dependencies. You don't need Spring to use DI. You could use DI with plain old Java. However, Spring provides a very nice, powerful DI container. 
+
+There are other DI containers and frameworks out there Plexus, Pico container, JBoss microcontainer, and more recently Guice. And, other frameworks allow dependency injection like JSF, Seam and more. But Spring is the de facto industry standard way to do DI.
 
 What is also interesting is what we did not cover. We did not cover autowiring using by type, by name or constructor autowiring as these are features that developers just don't use in a production environments. A future tutorial titled, "DI details", will cover this as well as many other topics related to Spring DI like bean definitions, using lists, maps and sets, FactoryBeans, ApplicationContextAware, and yes autowiring.
 
