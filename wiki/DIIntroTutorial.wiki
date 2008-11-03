@@ -10,7 +10,7 @@ Rick Hightower
 ===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is a first pass. 
 
-Update... I took a second pass to it. Added images. Completed TODOs. Next comes me copy editing it, then hiring a copy editor.
+Update... I took a second pass to it. Added images. Completed TODOs. I did my best to copy edit it.... next come the real copy editor.
 
 
 =Dependency injection=
