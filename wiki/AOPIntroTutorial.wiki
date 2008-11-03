@@ -2,6 +2,10 @@
 ===About this article===
 This article discusses AOP in a tutorial format. It covers some of the newer features of Spring AOP like annotations, improved XML config and more. It builds on the DIIntroTutorial. 
 
+===About the author===
+Rick Hightower
+([http://docs.google.com/View?docid=dw4ms58_7ghf4wbc4 Rick's bio]) serves as chief technology officer for [http://www.arc-mind.com/ ArcMind Inc., a consulting and training firm specializing in Spring, JPA/Hibernate, and JSF]. Rick enjoys [http://docs.google.com/Doc?id=dw4ms58_9cbddr2xj writing] and [http://code.google.com/p/krank/ programming].
+
 ===Article status===
 This has not been reviewed or edited. This has not been tech reviewed. This is an *early* first pass.
 
@@ -279,4 +283,3 @@ To apply an Advice like *SecurityAdvice* to an advised object, you need a pointc
 </beans>
 
 }}}
-
