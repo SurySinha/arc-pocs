@@ -24,3 +24,15 @@ java -cp hsqldb-1.7.3.0.jar org.hsqldb.Server -database.0 file:/db/testdb -dbnam
 </dependency>
 
 }}}
+
+=Adding log4j=
+
+{{{
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.13</version>
+		<type>jar</type>
+	</dependency>
+
+}}}
