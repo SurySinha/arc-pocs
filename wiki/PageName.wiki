@@ -5,6 +5,8 @@ Notes
 
 
 = Details =
+http://www.hibernate.org/hib_docs/v3/api/
+
 {{{
 cd .m2
 cd repository
