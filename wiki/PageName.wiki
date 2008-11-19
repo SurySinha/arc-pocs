@@ -134,4 +134,6 @@ Make sure you connect this way
 db.connection.url=jdbc:hsqldb:hsql://localhost/xdb
 
 hibernate.connection.url=jdbc:hsqldb:hsql://localhost/xdb
+
+org.hibernate.cache.HashtableCacheProvider
 }}}
