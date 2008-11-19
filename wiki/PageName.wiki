@@ -128,3 +128,8 @@ public class DbUnitDataLoader {
 	</dependency>
 
 }}}
+
+Make sure you connect this way
+{{{
+hibernate.connection.url=jdbc:hsqldb:hsql://localhost/xdb
+}}}
