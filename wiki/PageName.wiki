@@ -137,3 +137,5 @@ hibernate.connection.url=jdbc:hsqldb:hsql://localhost/xdb
 
 org.hibernate.cache.HashtableCacheProvider
 }}}
+
+http://java.dzone.com/articles/dependency-injection-an-introd
