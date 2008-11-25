@@ -352,6 +352,12 @@ public class AtmMain {
 
 }}}
 
-Before we added AOP support when we looked up AOP we had something like this:
+Before we added AOP support when we looked up the atm we looked up the object directly as shown in figure 1.
 
-beforeAOP.png
+====Figure 3: Before AOP advice====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/beforeAOP.png
+
+After we added AOP support, we now get an AOP proxy that applies the *securityAdvice* to the *atm* as show in figure 2.
+
+==== Figure 2: After AOP advice ====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/beforeAOP.png
