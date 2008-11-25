@@ -8,9 +8,7 @@ Rick Hightower
  
 
 ===Article status===
-This has not been reviewed or edited. This has not been tech reviewed. This is a first pass. 
-
-Update... I took a second pass to it. Added images. Completed TODOs. I did my best to copy edit it.... next come the real copy editor.
+This has been reviewed and copy edited. I have not applied the copy editing to this yet. The copy edited version was featured on Java Lobby as a featured article and you can find it here: [http://java.dzone.com/articles/dependency-injection-an-introd Dependency Injection - An Introductory Tutorial].
 
 
 =Dependency injection=
