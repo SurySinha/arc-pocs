@@ -284,7 +284,7 @@ To apply an Advice like *SecurityAdvice* to an advised object, you need a pointc
 
 }}}
 
-Because we have component scan turned on with the *component-scan* tag, the *SecurityAdvice* get installed in the Spring application context under the default bean name *securityAdvice*. (The default bean name is the simple name of the class). The atm bean is registered using the component scan as well as follows:
+Because we have component scan turned on with the *context:component-scan* tag, the *SecurityAdvice* get installed in the Spring application context under the default bean name *securityAdvice*. (The default bean name is the simple name of the class). The atm bean is registered using the component scan as well as follows:
 
 ==== AutomatedTellerMachine class using @Service ====
 {{{
@@ -296,4 +296,12 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
         private ATMTransport transport;
 }}}
 
-The *pointcut* tag defines the pointcut rule using this AspectJ expression *bean(atm)* which means decorate the bean named *atm*. If you want to decorate all beans whose names ends in *Service* you would use *bean(\*Service)*.
+The *aop:pointcut* tag defines the pointcut rule using this AspectJ expression *bean(atm)* which means decorate the bean named *atm*. If you want to decorate all beans whose names ends in *Service* you would use
+
+{{{
+ bean(*Service)
+}}}
+
+To see a full description of the AspectJ pointcut language see [http://www.eclipse.org/aspectj/doc/released/progguide/semantics-pointcuts.html pointcuts]. Note that the bean name pointcut can take you far.
+
+We apply this pointcut and advice around the *atm* methods using the *aop:around* tag by referring to the *atmLayer* we defined with the *aop:pointcut*.
