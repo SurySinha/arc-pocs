@@ -257,7 +257,7 @@ An instance of *ProceedingJoinPoint*, namely *joinPoint*, is passed as an argume
 
 To apply an Advice like *SecurityAdvice* to an advised object, you need a pointcut. A pointcut is like a filter that picks the objects and methods that get decorated. For this example, we will configure the pointcut into the Spring application context with the *aop:config*,  *aop:aspect*, *aop:pointcut*, and *aop:around* tags as follows:.
 
-====applicationContext.xmlf====
+====applicationContext.xml====
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
