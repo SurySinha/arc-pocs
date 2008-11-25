@@ -8,7 +8,7 @@ Rick Hightower
  
 
 ===Article status===
-This has been reviewed and copy edited. I have not applied the copy editing to this yet. The copy edited version was featured on Java Lobby as a featured article and you can find it here: [http://java.dzone.com/articles/dependency-injection-an-introd Dependency Injection - An Introductory Tutorial].
+This has been reviewed and copy edited. I have not applied the copy editing to this yet. The copy edited version was featured on Java Lobby as a featured article and you can find it here: [http://java.dzone.com/articles/dependency-injection-an-introd Spring 2.5 Dependency Injection - An Introductory Tutorial]. There is a part two for this article [http://code.google.com/p/arc-pocs/wiki/AOPIntroTutorial Spring 2.5 AOP - An Introduction Tutorial].
 
 
 =Dependency injection=
