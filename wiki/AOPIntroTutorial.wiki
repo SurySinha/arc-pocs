@@ -12,7 +12,7 @@ This has not been reviewed or edited. This has not been tech reviewed. This is a
 =Spring 2.x AOP=
 For some, AOP seems like voodoo magic. For others, AOP seems like a cure all. For now, let's just say that AOP is a tool that you want in your developer tool box. It can make seemingly impossible things easy.
 
-The first time I used AOP was with Spring's transaction management support. I did not realize I was using AOP, I just knew Spring could apply EJB-style transaction management to POJOs. It was probably 3 to six months before I realized I was using Spring's AOP support. Spring truly brought AOP out of the esoteric closet into the main stream light of day.
+The first time that I used AOP was with Spring's transaction management support. I did not realize I was using AOP. I just knew Spring could apply EJB-style declarative transaction management to POJOs. It was probably 3 to six months before I realized that I was using Spring's AOP support. Spring truly brought AOP out of the esoteric closet into the main stream light of day.
 
 You can think of AOP as a way to apply services (called cross-cutting concerns) to objects. AOP encompasses more than this, but this is where it gets used mostly in the main stream.
 
