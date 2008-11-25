@@ -20,7 +20,7 @@ I've using AOP to apply caching services, transaction management, resource manag
 
 For this introduction to AOP, let's take a simple example, let's apply security services to our Automated Teller Machine from the first DI example.
 
-You can think of AOP as a dynamic decorator design pattern. (TODO Explain decorator design pattern.)
+You can think of AOP as a dynamic decorator design pattern.  The decorator pattern allows additional behavior to be added to an existing class by wrapping the original class and duplicating its interface and then delegating to the original. See this article [http://en.wikipedia.org/wiki/Decorator_pattern decorator pattern] for more detail about the decorator pattern. 
 
 Let's say when a user logs into a system a *SecurityToken* is created that carries the user's credentials and before methods on objects get invoked, we want to check to see if the user has credentials to invoke these methods.
 
@@ -283,3 +283,17 @@ To apply an Advice like *SecurityAdvice* to an advised object, you need a pointc
 </beans>
 
 }}}
+
+Because we have component scan turned on with the *component-scan* tag, the *SecurityAdvice* get installed in the Spring application context under the default bean name *securityAdvice*. (The default bean name is the simple name of the class). The atm bean is registered using the component scan as well as follows:
+
+==== AutomatedTellerMachine class using @Service ====
+{{{
+@Service ("atm")
+public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
+        
+        @Autowired (required=true)
+        @Qualifier ("default")
+        private ATMTransport transport;
+}}}
+
+The *pointcut* tag defines the pointcut rule using this AspectJ expression *bean(atm)* which means decorate the bean named *atm*. If you want to decorate all beans whose names ends in *Service* you would use *bean(*Service)*.
