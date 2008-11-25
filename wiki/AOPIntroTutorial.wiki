@@ -304,4 +304,54 @@ The *aop:pointcut* tag defines the pointcut rule using this AspectJ expression *
 
 To see a full description of the AspectJ pointcut language see [http://www.eclipse.org/aspectj/doc/released/progguide/semantics-pointcuts.html pointcuts]. Note that the bean name pointcut can take you far.
 
-We apply this pointcut and advice around the *atm* methods using the *aop:around* tag by referring to the *atmLayer* we defined with the *aop:pointcut*.
+We apply this pointcut and advice around the *atm* methods using the *aop:around* tag by referring to the *atmLayer* we defined with the *aop:pointcut*. Then when the *atm* is looked up with AtmMain (listed below), instead of getting the original *atm*, you get an AOP proxy which is like a dynamic decorator.
+
+Let's review *AtmMain* as follows:
+
+==== AtmMain.java ====
+{{{
+package com.arcmind.springquickstart.atm;
+
+import java.math.BigDecimal;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.arcmind.springquickstart.security.SecurityService;
+import com.arcmind.springquickstart.security.SecurityToken;
+
+public class AtmMain {
+	
+	public static void simulateLogin() {
+		SecurityService.placeSecurityToken(new SecurityToken(true, "Rick Hightower"));
+	}
+
+	public static void simulateNoAccess() {
+		SecurityService.placeSecurityToken(new SecurityToken(false, "Tricky Lowtower"));
+	}	
+	
+	public static void main(String[] args) throws Exception {
+		
+		simulateLogin();
+
+		ApplicationContext appContext = new ClassPathXmlApplicationContext(
+											"classpath:./spring/applicationContext.xml");
+
+		AutomatedTellerMachine atm = (AutomatedTellerMachine) appContext
+				.getBean("atm");
+
+		atm.withdraw(new BigDecimal("10.00"));
+
+		atm.deposit(new BigDecimal("100.00"));
+		
+		System.out.println("done");
+
+	}
+
+}
+
+}}}
+
+Before we added AOP support when we looked up AOP we had something like this:
+
+beforeAOP.png
