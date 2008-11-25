@@ -296,4 +296,4 @@ public class AutomatedTellerMachineImpl implements AutomatedTellerMachine{
         private ATMTransport transport;
 }}}
 
-The *pointcut* tag defines the pointcut rule using this AspectJ expression *bean(atm)* which means decorate the bean named *atm*. If you want to decorate all beans whose names ends in *Service* you would use *bean(*Service)*.
+The *pointcut* tag defines the pointcut rule using this AspectJ expression *bean(atm)* which means decorate the bean named *atm*. If you want to decorate all beans whose names ends in *Service* you would use *bean(\*Service)*.
