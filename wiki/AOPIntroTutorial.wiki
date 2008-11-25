@@ -360,4 +360,4 @@ http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/beforeAOP.png
 After we added AOP support, we now get an AOP proxy that applies the *securityAdvice* to the *atm* as show in figure 2.
 
 ==== Figure 2: After AOP advice ====
-http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/beforeAOP.png
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/afterAOP.png
