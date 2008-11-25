@@ -306,6 +306,13 @@ To see a full description of the AspectJ pointcut language see [http://www.eclip
 
 We apply this pointcut and advice around the *atm* methods using the *aop:around* tag by referring to the *atmLayer* we defined with the *aop:pointcut*. Then when the *atm* is looked up with AtmMain (listed below), instead of getting the original *atm*, you get an AOP proxy which is like a dynamic decorator.
 
+Figure 1 shows graphically how the objects and advice are found and applied.
+
+====Figure 1: AOP Configuration====
+http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/aopConfig.png
+
+Let's complete our example by reviwing the AtmMain method that looks up the atm out of the Spring *applicatoinContext*.
+
 Let's review *AtmMain* as follows:
 
 ==== AtmMain.java ====
@@ -352,12 +359,13 @@ public class AtmMain {
 
 }}}
 
-Before we added AOP support when we looked up the atm we looked up the object directly as shown in figure 1.
+Before we added AOP support when we looked up the atm we looked up the object directly as shown in figure 2.
 
-====Figure 3: Before AOP advice====
+====Figure 2: Before AOP advice====
 http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/beforeAOP.png
 
-After we added AOP support, we now get an AOP proxy that applies the *securityAdvice* to the *atm* as show in figure 2.
+After we added AOP support, we now get an AOP proxy that applies the *securityAdvice* to the *atm* as show in figure 3.
 
-==== Figure 2: After AOP advice ====
+==== Figure 3: After AOP advice ====
 http://arc-pocs.googlecode.com/svn/images/images-spring-quickstart/afterAOP.png
+
