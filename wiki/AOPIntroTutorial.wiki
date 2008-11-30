@@ -210,27 +210,27 @@ public class SecurityAdvice {
 
 	public void checkSecurity(ProceedingJoinPoint joinPoint) throws Throwable {
 		
-    	/* If the user is not logged in, don't let them use this method */
-    	if(!securityManager.isLoggedIn()){
-    		throw new SecurityViolationException();
-    	}
+            /* If the user is not logged in, don't let them use this method */
+            if(!securityManager.isLoggedIn()){            
+                throw new SecurityViolationException();
+            }
 
-        /* Get the name of the method being invoked. */
-    	String operationName = joinPoint.getSignature().getName();
-    	/* Get the name of the object being invoked. */
-    	String objectName = joinPoint.getThis().getClass().getName();
+            /* Get the name of the method being invoked. */
+            String operationName = joinPoint.getSignature().getName();
+            /* Get the name of the object being invoked. */
+            String objectName = joinPoint.getThis().getClass().getName();
 
 
-    	/*
-    	 * Invoke the method or next Interceptor in the list,
-    	 * if the current user is allowed.
-    	 */
-    	if (!securityManager.isAllowed(objectName, operationName)){
-    		throw new SecurityViolationException();
-    	}
+           /*
+            * Invoke the method or next Interceptor in the list,
+            * if the current user is allowed.
+            */
+            if (!securityManager.isAllowed(objectName, operationName)){
+                throw new SecurityViolationException();
+            }
     	
-    	joinPoint.proceed();
-	}
+            joinPoint.proceed();
+        }
 	
 
 	/**
