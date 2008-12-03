@@ -7,7 +7,7 @@ Rick Hightower
 ([http://docs.google.com/View?docid=dw4ms58_7ghf4wbc4 Rick's bio]) serves as chief technology officer for [http://www.arc-mind.com/ ArcMind Inc., a consulting and training firm specializing in Spring, JPA/Hibernate, and JSF]. Rick enjoys [http://docs.google.com/Doc?id=dw4ms58_9cbddr2xj writing] and [http://code.google.com/p/krank/ programming].
 
 ===Article status===
-This article is still a rough draft. It has been edited and images have been added. It is ready for the copy editor.
+This article is still a rough draft. It has been edited and images have been added. It is ready for the copy editor. Updated: added description of AOP proxy.
 
 
 =Spring 2.x AOP=
